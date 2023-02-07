@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Step 2-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+    <!--Step 2-->
+    <svg width="900" height="400"></svg>
+    <script>
+      // Step 1
+      var dataset1 = [
+        [1, 2],
+        [2, 3],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 2],
+        [8, 2],
+        [9, 1],
+        [10, 1],
+        [11, 1],
+        [12, 1],
+      ];
+
+      var dataset2 = [
+        [1, 2],
+        [2, 3],
+        [3, 2],
+        [4, 3],
+        [5, 2],
+        [6, 1],
+        [7, 1],
+        [8, 2],
+        [9, 1],
+        [10, 1],
+        [11, 1],
+        [12, 1],
+      ];
+
+      var dataset3 = [
+        [1, 1],
+        [2, 2],
+        [3, 2],
+        [4, 3],
+        [5, 2],
+        [6, 1],
+        [7, 1],
+        [8, 2],
+        [9, 3],
+        [10, 2],
+        [11, 1],
+        [12, 2],
+      ];
+
+      // Step 3
+      var svg = d3.select("svg"),
+        margin = 200,
+        width = svg.attr("width") - margin, //300
+        height = svg.attr("height") - margin; //200
+
+      // Step 4
+      var xScale = d3.scaleLinear().domain([0, 12]).range([0, width]),
+        yScale = d3.scaleLinear().domain([0, 3]).range([height, 0]);
+
+      var y_axis = d3
+        .axisLeft()
+        .scale(yScale)
+        .tickValues([1, 2, 3])
+        .tickFormat((d, i) => ["a", "b", "c"][i])
+        .tickSize(width);
+
+      var g = svg
+        .append("g")
+        .attr("transform", "translate(" + 100 + "," + 100 + ")")
+        .call(y_axis);
+
+      var x_axis = d3
+        .axisBottom()
+        .scale(xScale)
+        .tickValues([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+        .tickFormat((d, i) => [`Styczeń`, "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"][i]);
+
+        
+
+      // Step 5
+
+      
+
+      // Title
+      svg
+        .append("text")
+        .attr("x", width / 2 + 100)
+        .attr("y", 100)
+        .attr("text-anchor", "middle")
+        .style("font-family", "Helvetica")
+        .style("font-size", 20)
+        .text("Line Chart");
+
+      // X label
+      svg
+        .append("text")
+        .attr("x", width / 2 + 100)
+        .attr("y", height - 15 + 150)
+        .attr("text-anchor", "middle")
+        .style("font-family", "Helvetica")
+        .style("font-size", 12)
+        .text("2023");
+
+      // Y label
+      svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "translate(60," + height + ")rotate(-90)")
+        .style("font-family", "Helvetica")
+        .style("font-size", 12)
+        .text("Dependant");
+
+      // Step 6
+      g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(x_axis);
+
+      // Step 7
+      var line = d3
+        .line()
+        .x(function (d) {
+          return xScale(d[0]);
+        })
+        .y(function (d) {
+          return yScale(d[1]);
+        })
+        .curve(d3.curveMonotoneX);
+
+      svg
+        .append("path")
+        .datum(dataset1)
+        .attr("class", "line")
+        .attr("transform", "translate(" + 100 + "," + 100 + ")")
+        .attr("d", line)
+        .style("fill", "none")
+        .style("stroke", "#CC0000")
+        .style("stroke-width", "2");
+
+      svg
+        .append("path")
+        .datum(dataset2)
+        .attr("class", "line")
+        .attr("transform", "translate(" + 100 + "," + 100 + ")")
+        .attr("d", line)
+        .style("fill", "none")
+        .style("stroke", "#1E90FF")
+        .style("stroke-width", "2");
+
+      svg
+        .append("path")
+        .datum(dataset3)
+        .attr("class", "line")
+        .attr("transform", "translate(" + 100 + "," + 100 + ")")
+        .attr("d", line)
+        .style("fill", "none")
+        .style("stroke", "yellow")
+        .style("stroke-width", "2");
+    </script>
+  </body>
+</html>
